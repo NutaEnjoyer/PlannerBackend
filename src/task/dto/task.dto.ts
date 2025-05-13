@@ -16,7 +16,7 @@ export class TaskDto {
 
     @IsOptional()
     @IsString()
-    CreatedAt?: string
+    сreatedAt?: string
 
     @IsOptional()
     @IsEnum(Priority)

@@ -96,7 +96,7 @@ export class UserService {
 
     if (dto.email) {
       const mayUser = await this.getByEmail(dto.email);
-      if (mayUser) throw new ConflictException("This email is already used")
+      if (mayUser && mayUser.id != id) throw new ConflictException("This email is already used")
     }
 
     return this.prisma.user.update({

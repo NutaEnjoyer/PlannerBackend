@@ -3,6 +3,7 @@ import { TaskService } from './task.service';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 import { CurrentUser } from 'src/auth/decorators/user.decorator';
 import { TaskDto } from './dto/task.dto';
+import { Optional } from '@prisma/client/runtime/library';
 
 @Controller('user/tasks')
 export class TaskController {
@@ -27,7 +28,7 @@ export class TaskController {
   @Auth()
   @HttpCode(200)
   async update(
-    @Body() dto: TaskDto,
+    @Body() dto: Optional<TaskDto>,
     @CurrentUser('id') userId: string,
     @Param('id') id: string
   ) {
