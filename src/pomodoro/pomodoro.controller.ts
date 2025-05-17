@@ -44,8 +44,6 @@ export class PomodoroController {
       return this.pomodoroService.update(dto, id, userId)
   }
 
-
-
   @HttpCode(200)
   @Delete(':id')
   @Auth()

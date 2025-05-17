@@ -5,3 +5,9 @@ export const getPORT = async (
 ): Promise<number> => {
     return ConfigService.get<number>("PORT", 3000)
 }
+
+export const getDOMAIN = async (
+    ConfigService: ConfigService
+): Promise<string> => {
+    return ConfigService.get<string>("DOMAIN", "localhost")
+}

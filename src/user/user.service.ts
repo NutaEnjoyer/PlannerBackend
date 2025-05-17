@@ -3,7 +3,6 @@ import { UserDto } from './dto/user.dto';
 import { PrismaService } from 'src/prisma.service';
 import { AuthDto } from 'src/auth/dto/auth.dto';
 import { hash } from 'argon2';
-import { User } from '@prisma/client';
 import { startOfDay, subDays } from 'date-fns'
  
 @Injectable()

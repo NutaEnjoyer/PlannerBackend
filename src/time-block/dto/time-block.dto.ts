@@ -15,5 +15,5 @@ export class TimeBlockDto {
 
     @IsNumber()
     @IsOptional()
-    order: number
+    order?: number
 }

@@ -1,25 +1,49 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import * as cookieParser from 'cookie-parser'
 import { ConfigService } from '@nestjs/config';
-import { ExceptionsHandler } from '@nestjs/core/exceptions/exceptions-handler';
-import { getPORT } from './config/app.config';
+import * as cookieParser from 'cookie-parser'
+import { Logger } from '@nestjs/common';
+import helmet from 'helmet';
+import { getConfigValue } from './config/main.config';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const logger = new Logger('Bootstrap');
+  const app = await NestFactory.create(AppModule, {
+    logger: ['error', 'warn', 'debug', 'verbose', 'log'],
+    bufferLogs: true,
+  });
 
   const configService = app.get(ConfigService);
 
-  const PORT = await getPORT(configService);
+  const PORT = await getConfigValue(configService, 'PORT', 3000);
+  const DOMAIN = await getConfigValue(configService, 'DOMAIN', 'localhost');
+  const GLOBAL_PREFIX = await getConfigValue(configService, 'GLOBAL_PREFIX', 'api');
 
-  app.setGlobalPrefix('api')
+
+  const allowedOrigins = [
+    `http://localhost:3000`,
+    `http://${DOMAIN}:${PORT}`
+  ];
+  
+  app.setGlobalPrefix(GLOBAL_PREFIX);
   app.use(cookieParser())
+  app.use(helmet())
   app.enableCors({
-    origin: ['http://localhost:3000'],
+    origin: allowedOrigins,
     credentials: true,
-    exposedHeaders: 'set-cookie'
+    exposedHeaders: 'set-cookie',
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
   })
 
-  await app.listen(PORT ?? 3000);
+  try {
+    await app.listen(PORT, () => {
+      console.log(`Application is running on: http://${DOMAIN}:${PORT}/${GLOBAL_PREFIX}`);
+      console.log(`Allowed origins: ${allowedOrigins.join(', ')}`);
+    });
+  } catch (error) {
+    console.error('Error starting the application:', error);
+    process.exit(1);
+  }
 }
+
 bootstrap();
