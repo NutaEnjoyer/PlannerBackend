@@ -79,7 +79,7 @@ export class AuthService {
             httpOnly: true,
             domain: domain,
             expires: expiresIn,
-            secure: true,
+            secure: true,   
             sameSite: 'none' // 'lax' for prod
         })
     }

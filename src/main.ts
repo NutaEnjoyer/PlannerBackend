@@ -36,7 +36,7 @@ async function bootstrap() {
   })
 
   try {
-    await app.listen(PORT, () => {
+    await app.listen(PORT, '0.0.0.0', () => {
       console.log(`Application is running on: http://${DOMAIN}:${PORT}/${GLOBAL_PREFIX}`);
       console.log(`Allowed origins: ${allowedOrigins.join(', ')}`);
     });
