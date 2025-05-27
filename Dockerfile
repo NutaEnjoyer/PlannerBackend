@@ -1,7 +1,9 @@
 # Используем официальный node образ
 FROM node:20-alpine
 
-RUN apk add --no-cache bash
+RUN sed -i 's|dl-cdn.alpinelinux.org|mirror.yandex.ru/mirrors/alpine|' /etc/apk/repositories \
+ && apk update \
+ && apk add --no-cache bash
 # Рабочая директория в контейнере
 WORKDIR /app
 
