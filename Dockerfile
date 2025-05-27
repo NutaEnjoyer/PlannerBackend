@@ -5,6 +5,9 @@ RUN apk update && apk add --no-cache bash
 # Рабочая директория в контейнере
 WORKDIR /app
 
+COPY wait-for-it.sh .
+RUN chmod +x wait-for-it.sh
+
 # Копируем package.json и package-lock.json (если есть)
 COPY package*.json ./
 
