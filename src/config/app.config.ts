@@ -9,5 +9,5 @@ export const getPORT = async (
 export const getDOMAIN = async (
     ConfigService: ConfigService
 ): Promise<string> => {
-    return ConfigService.get<string>("DOMAIN", "localhost")
+    return ConfigService.get<string>("DOMAIN", "95.163.229.128")
 }

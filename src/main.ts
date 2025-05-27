@@ -16,12 +16,12 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
 
   const PORT = await getConfigValue(configService, 'PORT', 3000);
-  const DOMAIN = await getConfigValue(configService, 'DOMAIN', 'localhost');
+  const DOMAIN = await getConfigValue(configService, 'DOMAIN', '95.163.229.128');
   const GLOBAL_PREFIX = await getConfigValue(configService, 'GLOBAL_PREFIX', 'api');
 
 
   const allowedOrigins = [
-    `http://95.27.74.242:3000`,
+    `http://95.163.229.128:3000`,
     `http://0.0.0.0:3000`,
     `http://localhost:3000`,
     `http://${DOMAIN}:${PORT}`
