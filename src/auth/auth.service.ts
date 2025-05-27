@@ -73,7 +73,7 @@ export class AuthService {
         const expiresIn = new Date()
         expiresIn.setDate(expiresIn.getDate() + this.EXPIRE_DAY_REFRESH_TOKEN)
 
-        const domain = await getDOMAIN(this.configService) || "95.163.229.128"
+        const domain = "95.163.229.128" // || await getDOMAIN(this.configService)
 
         res.cookie(this.REFRESH_TOKEN_NAME, refreshToken, {
             httpOnly: true,

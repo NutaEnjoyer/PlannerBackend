@@ -1,9 +1,7 @@
 # Используем официальный node образ
 FROM node:20-alpine
 
-RUN sed -i 's|dl-cdn.alpinelinux.org|mirror.yandex.ru/mirrors/alpine|' /etc/apk/repositories \
- && apk update \
- && apk add --no-cache bash
+RUN apk update && apk add --no-cache bash
 # Рабочая директория в контейнере
 WORKDIR /app
 
@@ -19,6 +17,7 @@ COPY . .
 RUN npx prisma generate
 
 # Компилируем проект (если используется TypeScript)
+RUN npm install @nestjs/cli
 RUN npm run build
 
 # Открываем порт, на котором слушает NestJS (по умолчанию 3000)
